@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnIndia - Online Learning Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary-color: #4f46e5;
+            --secondary-color: #10b981;
+            --accent-color: #f59e0b;
+            --light-color: #f8fafc;
+            --dark-color: #1e293b;
+            --text-color: #334155;
+        }
+        
+        body {
+            background-color: #f1f5f9;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .logo i {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--primary-color);
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-size: 1rem;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #4338ca;
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+        }
+        
+        .hero-container {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .hero-content {
+            flex: 1;
+        }
+        
+        .hero-image {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            color: var(--dark-color);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero h1 span {
+            color: var(--primary-color);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: var(--text-color);
+        }
+        
+        .stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .stat-text {
+            font-size: 1rem;
+            color: var(--text-color);
+        }
+        
+        /* Courses Section */
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark-color);
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .courses {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .course-filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        
+        .filter-btn {
+            padding: 10px 20px;
+            background-color: var(--light-color);
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .course-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .course-img {
+            height: 180px;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+        
+        .course-content {
+            padding: 25px;
+        }
+        
+        .course-category {
+            display: inline-block;
+            background-color: var(--light-color);
+            color: var(--primary-color);
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .course-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        
+        .course-instructor {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+        
+        .course-instructor img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+        
+        .course-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark-color);
+        }
+        
+        .course-price span {
+            font-size: 1rem;
+            color: var(--text-color);
+            text-decoration: line-through;
+            margin-left: 5px;
+        }
+        
+        /* Enrollment Section */
+        .enrollment {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        }
+        
+        .enrollment-container {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .enrollment-image {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .enrollment-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .enrollment-content {
+            flex: 1;
+        }
+        
+        .enrollment-options {
+            margin-top: 30px;
+        }
+        
+        .enrollment-option {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .option-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--dark-color);
+        }
+        
+        /* Testimonials Section */
+        .testimonials {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .testimonial-card {
+            background-color: var(--light-color);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+        
+        .testimonial-card::before {
+            content: "\201C";
+            font-size: 4rem;
+            color: var(--primary-color);
+            opacity: 0.2;
+            position: absolute;
+            top: 10px;
+            left: 20px;
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .author-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .author-info h4 {
+            color: var(--dark-color);
+            margin-bottom: 5px;
+        }
+        
+        .author-info p {
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-column ul li a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #334155;
+            color: #cbd5e1;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .hero-container, .enrollment-container {
+                flex-direction: column;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .course-grid, .testimonial-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .auth-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .hero {
+                padding: 50px 0;
+            }
+            
+            .courses, .enrollment, .testimonials {
+                padding: 50px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>LearnIndia</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#courses">Courses</a></li>
+                    <li><a href="#enrollment">Enroll</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <button class="btn btn-outline">Log In</button>
+                <button class="btn btn-primary">Sign Up</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-container">
+            <div class="hero-content">
+                <h1>Learn <span>Anywhere, Anytime</span> with India's Top Educators</h1>
+                <p>Access high-quality courses in regional languages, affordable pricing, and flexible learning schedules tailored for Indian students.</p>
+                <button class="btn btn-primary">Explore Courses</button>
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-text">Courses</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">50K+</div>
+                        <div class="stat-text">Students</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">200+</div>
+                        <div class="stat-text">Expert Instructors</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <!-- Using a placeholder image -->
+                <div style="background-color: #4f46e5; height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem;">
+                    <div style="text-align: center; padding: 20px;">
+                        <i class="fas fa-laptop" style="font-size: 4rem; margin-bottom: 20px;"></i>
+                        <p>Interactive Online Learning Platform</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses Section -->
+    <section class="courses" id="courses">
+        <div class="container">
+            <div class="section-title">
+                <h2>Popular Courses</h2>
+                <p>Choose from a wide range of courses designed for Indian students, available in multiple languages including Hindi, Tamil, Telugu, and English.</p>
+            </div>
+            
+            <div class="course-filters">
+                <button class="filter-btn active" data-filter="all">All Courses</button>
+                <button class="filter-btn" data-filter="technology">Technology</button>
+                <button class="filter-btn" data-filter="business">Business</button>
+                <button class="filter-btn" data-filter="competitive">Competitive Exams</button>
+                <button class="filter-btn" data-filter="language">Languages</button>
+            </div>
+            
+            <div class="course-grid">
+                <!-- Course 1 -->
+                <div class="course-card" data-category="technology">
+                    <div class="course-img" style="background-color: #3b82f6;">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="course-content">
+                        <span class="course-category">Technology</span>
+                        <h3 class="course-title">Full Stack Web Development</h3>
+                        <div class="course-instructor">
+                            <div style="width:30px; height:30px; border-radius:50%; background-color:#10b981;"></div>
+                            <span>By Rohan Sharma</span>
+                        </div>
+                        <p>Master HTML, CSS, JavaScript, React, Node.js, and MongoDB to become a full-stack developer.</p>
+                        <div class="course-meta">
+                            <div><i class="far fa-clock"></i> 120 hours</div>
+                            <div><i class="fas fa-language"></i> Hindi/English</div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div class="course-price">₹3,499 <span>₹6,999</span></div>
+                            <button class="btn btn-primary">Enroll Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Course 2 -->
+                <div class="course-card" data-category="competitive">
+                    <div class="course-img" style="background-color: #10b981;">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <div class="course-content">
+                        <span class="course-category">Competitive Exams</span>
+                        <h3 class="course-title">UPSC Civil Services Prelims</h3>
+                        <div class="course-instructor">
+                            <div style="width:30px; height:30px; border-radius:50%; background-color:#f59e0b;"></div>
+                            <span>By Anjali Mehta</span>
+                        </div>
+                        <p>Complete guidance for UPSC Prelims with current affairs, test series, and strategy sessions.</p>
+                        <div class="course-meta">
+                            <div><i class="far fa-clock"></i> 200 hours</div>
+                            <div><i class="fas fa-language"></i> Hindi/English</div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div class="course-price">₹8,999 <span>₹15,999</span></div>
+                            <button class="btn btn-primary">Enroll Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Course 3 -->
+                <div class="course-card" data-category="business">
+                    <div class="course-img" style="background-color: #8b5cf6;">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="course-content">
+                        <span class="course-category">Business</span>
+                        <h3 class="course-title">Digital Marketing Mastery</h3>
+                        <div class="course-instructor">
+                            <div style="width:30px; height:30px; border-radius:50%; background-color:#3b82f6;"></div>
+                            <span>By Vikram Patel</span>
+                        </div>
+                        <p>Learn SEO, social media marketing, Google Ads, and analytics to boost your career.</p>
+                        <div class="course-meta">
+                            <div><i class="far fa-clock"></i> 80 hours</div>
+                            <div><i class="fas fa-language"></i> English/Tamil</div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div class="course-price">₹2,999 <span>₹5,999</span></div>
+                            <button class="btn btn-primary">Enroll Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enrollment Section -->
+    <section class="enrollment" id="enrollment">
+        <div class="container enrollment-container">
+            <div class="enrollment-content">
+                <div class="section-title" style="text-align: left;">
+                    <h2>Flexible Enrollment Options</h2>
+                    <p>Choose a learning plan that fits your schedule and budget. All courses come with certificate of completion.</p>
+                </div>
+                
+                <div class="enrollment-options">
+                    <div class="enrollment-option">
+                        <div>
+                            <div class="option-title">Self-Paced Learning</div>
+                            <p>Learn at your own pace with lifetime access to course materials</p>
+                        </div>
+                        <button class="btn btn-outline">Choose Plan</button>
+                    </div>
+                    
+                    <div class="enrollment-option">
+                        <div>
+                            <div class="option-title">Instructor-Led Batch</div>
+                            <p>Join live classes with peer interaction and doubt clearing sessions</p>
+                        </div>
+                        <button class="btn btn-outline">Choose Plan</button>
+                    </div>
+                    
+                    <div class="enrollment-option">
+                        <div>
+                            <div class="option-title">Mentorship Program</div>
+                            <p>Get 1:1 mentorship, career guidance, and placement assistance</p>
+                        </div>
+                        <button class="btn btn-primary">Choose Plan</button>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 30px; padding: 20px; background-color: white; border-radius: 10px;">
+                    <h3 style="margin-bottom: 10px;">Special Offer for Indian Students</h3>
+                    <p>Avail up to 50% discount on all courses using coupon code <strong>LEARNINDIA50</strong>. Scholarships available for meritorious students.</p>
+                </div>
+            </div>
+            
+            <div class="enrollment-image">
+                <!-- Using a placeholder image -->
+                <div style="background-color: #f59e0b; height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem;">
+                    <div style="text-align: center; padding: 20px;">
+                        <i class="fas fa-user-graduate" style="font-size: 4rem; margin-bottom: 20px;"></i>
+                        <p>Flexible Learning Plans for Every Student</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>What Our Students Say</h2>
+                <p>Hear from thousands of Indian students who have transformed their careers with LearnIndia.</p>
+            </div>
+            
+            <div class="testimonial-grid">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "The UPSC course completely changed my preparation strategy. The Hindi medium content was especially helpful. I cleared my prelims in the first attempt!"
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-img" style="background-color: #3b82f6;"></div>
+                        <div class="author-info">
+                            <h4>Priya Singh</h4>
+                            <p>UPSC Aspirant, Jaipur</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "As a working professional in Bangalore, the flexible timings of the web development course allowed me to upskill without leaving my job. Got a 40% hike after completion!"
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-img" style="background-color: #10b981;"></div>
+                        <div class="author-info">
+                            <h4>Arun Kumar</h4>
+                            <p>Software Developer, Bangalore</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "The digital marketing course in Tamil was exactly what I needed to start my own agency. The instructors were always available to clear doubts. Highly recommended!"
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-img" style="background-color: #8b5cf6;"></div>
+                        <div class="author-info">
+                            <h4>Deepa Rajan</h4>
+                            <p>Entrepreneur, Chennai</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="about">
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-column">
+                    <h3>LearnIndia</h3>
+                    <p>India's leading online learning platform offering quality education in regional languages at affordable prices.</p>
+                    <div style="margin-top: 20px; display: flex; gap: 15px;">
+                        <a href="#" style="color: white; font-size: 1.2rem;"><i class="fab fa-facebook"></i></a>
+                        <a href="#" style="color: white; font-size: 1.2rem;"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="color: white; font-size: 1.2rem;"><i class="fab fa-instagram"></i></a>
+                        <a href="#" style="color: white; font-size: 1.2rem;"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#courses">Courses</a></li>
+                        <li><a href="#enrollment">Pricing</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Popular Courses</h3>
+                    <ul>
+                        <li><a href="#">Full Stack Development</a></li>
+                        <li><a href="#">UPSC Preparation</a></li>
+                        <li><a href="#">Digital Marketing</a></li>
+                        <li><a href="#">Data Science</a></li>
+                        <li><a href="#">Spoken English</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Mumbai, India</li>
+                        <li><i class="fas fa-phone"></i> +91 9876543210</li>
+                        <li><i class="fas fa-envelope"></i> info@learnindia.com</li>
+                        <li><i class="fas fa-globe"></i> www.learnindia.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 LearnIndia. All rights reserved. Designed for Indian students.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Course filtering functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const courseCards = document.querySelectorAll('.course-card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const filterValue = this.getAttribute('data-filter');
+                    
+                    // Show/hide course cards based on filter
+                    courseCards.forEach(card => {
+                        if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // Enrollment option buttons
+            const enrollmentButtons = document.querySelectorAll('.enrollment-option .btn');
+            enrollmentButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    alert('Thank you for your interest! You will be redirected to the enrollment page.');
+                });
+            });
+            
+            // Course enroll buttons
+            const courseEnrollButtons = document.querySelectorAll('.course-card .btn-primary');
+            courseEnrollButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const courseTitle = this.closest('.course-card').querySelector('.course-title').textContent;
+                    alert(`You have selected: ${courseTitle}\nProceeding to checkout...`);
+                });
+            });
+            
+            // Auth buttons
+            const authButtons = document.querySelectorAll('.auth-buttons .btn');
+            authButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    if (this.textContent.includes('Log In')) {
+                        alert('Login form would appear here.');
+                    } else {
+                        alert('Sign up form would appear here.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
